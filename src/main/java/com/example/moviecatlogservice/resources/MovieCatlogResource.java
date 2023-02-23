@@ -33,13 +33,13 @@ public class MovieCatlogResource {
 
         //get all rated movie id
 
-        UserRating ratings = restTemplate.getForObject("http://localhost:8083/ratingsdata/users/" + userId , UserRating.class);
+        UserRating ratings = restTemplate.getForObject("http://18.210.18.50:3003/ratingsdata/users/" + userId , UserRating.class);
         //call movie info service microservice
 
         return ratings.getUserRating().stream().map( rating -> {
 
                     //For each id , -> call movie info service and get details
-                    Movie movie = restTemplate.getForObject("http://localhost:8082/movies/" + rating.getMovieId(), Movie.class);
+                    Movie movie = restTemplate.getForObject("http://18.210.18.50:3002/movies/" + rating.getMovieId(), Movie.class);
 
                     //put all together
                     return new CatalogItem(movie.getName(), movie.getDesc(), rating.getRating());
